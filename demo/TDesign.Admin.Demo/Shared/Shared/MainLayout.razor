@@ -1,0 +1,26 @@
+﻿@inherits LayoutComponentBase
+
+<TLayout>
+    <HeaderContent>
+        <TMenu Dark>
+            <LogoContent>
+                <h1>TDesign Admin 后台管理模板</h1>
+            </LogoContent>
+        </TMenu>
+    </HeaderContent>
+    <LeftSideContent>
+        <TMenu Aside>
+            <TMenuItemGroup Title="基础">
+                <TMenuItem Link="/">新手上路</TMenuItem>
+            </TMenuItemGroup>
+            <TMenuItemGroup Title="CRUD 模板">
+                <TMenuItem Link="/templates/table_dialog">表格和对话框</TMenuItem>
+            </TMenuItemGroup>
+        </TMenu>
+    </LeftSideContent>
+    <ChildContent>
+        <div style="margin:10px">
+        @Body
+        </div>
+    </ChildContent>
+</TLayout>

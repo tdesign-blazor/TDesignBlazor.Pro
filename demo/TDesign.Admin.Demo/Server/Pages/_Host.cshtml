@@ -1,0 +1,9 @@
+﻿@page "/"
+@namespace TDesign.Admin.Demo.Server.Pages
+@using TDesign.Admin.Demo.Shared;
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = "_Layout";
+}
+
+<component type="typeof(App)" render-mode="Server" />

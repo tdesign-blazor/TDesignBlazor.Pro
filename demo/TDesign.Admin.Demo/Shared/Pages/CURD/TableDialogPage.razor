@@ -1,0 +1,28 @@
+﻿@page "/templates/table_dialog"
+
+<PageHeader Title="表格和对话框模板">
+    使用表格和对话框实现增删改查的页面功能
+</PageHeader>
+
+<CrudTableDialogTemplate 
+    TKey="DateOnly" 
+    TCreate="WeatherForecast" 
+    TUpdate="WeatherForecast" 
+    TList="WeatherForecast"
+    DataSourceProvider="GetData"
+    >
+    <ListContent>
+        <TTableFieldColumn TItem="WeatherForecast" TField="DateOnly" Field="p=>p.Date" />
+    </ListContent>
+    
+</CrudTableDialogTemplate>
+
+@inject HttpClient Client
+
+@code{
+    async Task<DataSource<WeatherForecast>> GetData()
+    {
+        var data = await Client.GetFromJsonAsync<IEnumerable<WeatherForecast>>("/WeatherForecast");
+        return DataSource<WeatherForecast>.Parse(data);
+    }
+}

@@ -1,0 +1,57 @@
+﻿@*@inherits CrudPageBase<TKey,TCreate,TUpdate,TList>*@
+
+@typeparam TKey
+@typeparam TCreate
+@typeparam TUpdate
+@typeparam TList
+
+<TButton  Theme="Theme.Primary" OnClick="OpenCreateDialog">
+    <TIcon Name="CreateIconName"/>
+    @CreateText
+</TButton>
+
+<TTable TItem="TList" Data="DataSource">
+    @ListContent
+</TTable>
+
+@if (CreateDialogContent is not null)
+{
+    <TDialog @ref="RefCreateDialog"  
+Center
+    >
+        <HeaderContent>@CreateDialogTitle</HeaderContent>
+        <ChildContent>
+            <TForm EditContext="CreateEditContext">
+                <DataAnnotationsValidator/>
+                @if (CreateErrorMessages.Any())
+                {
+                    <TAlert Theme="Theme.Danger">
+                        <ul>
+                            @foreach (var message in CreateErrorMessages)
+                            {
+                                <li>@message</li>
+                            }
+                        </ul>
+                    </TAlert>
+                }
+                @CreateDialogContent(CreateModel)
+            </TForm>
+        </ChildContent>
+        <FooterContent>
+            <TSpace>
+                <TSpaceItem>
+                    <TButton Varient="ButtonVarient.Outline" OnClick="CloseCreateDialog">@CreateDialogCancelText</TButton>
+                </TSpaceItem>
+                <TSpaceItem>
+                    <TButton Theme="Theme.Primary">@CreateDialogSubmitText</TButton>
+                </TSpaceItem>
+            </TSpace>
+        </FooterContent>
+    </TDialog>
+}
+
+@*<TDialog @ref="RefUpdateDialog">
+    <TForm EditContext="UpdateEditContext">
+        @UpdateDialogContent(UpdateModel)
+    </TForm>
+</TDialog>*@

@@ -1,0 +1,14 @@
+﻿<PageTitle>@Title</PageTitle>
+
+<div style ="margin-bottom:5px;border-bottom:1px solid #ccc">
+<h1 >
+    @Title
+</h1>
+<p>@ChildContent</p>
+</div>
+
+
+@code{
+    [Parameter]public string? Title{ get; set; }
+    [Parameter]public RenderFragment? ChildContent{ get; set; }
+}
