@@ -3,3 +3,4 @@ global using Microsoft.AspNetCore.Components.Web;
 
 global using TDesign;
 global using ComponentBuilder;
+global using ComponentBuilder.FluentRenderTree;

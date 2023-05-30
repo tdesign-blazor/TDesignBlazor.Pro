@@ -1,0 +1,25 @@
+﻿@typeparam TModel
+
+<TDialog>
+    <HeaderContent>
+        @Title
+    </HeaderContent>
+    <ChildContent>
+        <TForm EditContext="_fixedEditContext">
+            <DataAnnotationsValidator />
+            <CascadingValue Value="_fixedEditContext" IsFixed>
+                @ChildContent
+            </CascadingValue>
+        </TForm>
+    </ChildContent>
+    <FooterContent>
+        <TSpace>
+            <TSpaceItem>
+                <TButton OnClick="Close" Varient="ButtonVarient.Outline">关闭</TButton>
+            </TSpaceItem>
+            <TSpaceItem>
+                <TButton Theme="Theme.Primary" OnClick="Submit">提交</TButton>
+            </TSpaceItem>
+        </TSpace>
+    </FooterContent>
+</TDialog>

@@ -1,0 +1,39 @@
+﻿@page "/templates/table_dialog"
+
+<PageHeader Title="表格和对话框模板">
+    使用表格和对话框实现增删改查的页面功能
+</PageHeader>
+
+<FormDialogButton TModel="WeatherForecast" DialogTitle="创建" ButtonText="新增">
+    <FormContent>
+        <TFormItem For="()=>context.Summary" Label="名称">
+            <TInputText @bind-Value="context.Summary" />
+        </TFormItem>
+    </FormContent>
+</FormDialogButton>
+
+
+<FormDialogButton TModel="WeatherForecast" DialogTitle="编辑" ButtonText="编辑" ModelProvider="Get">
+    <FormContent>
+        <TFormItem For="()=>context.Summary" Label="名称">
+            <TInputText @bind-Value="context.Summary" />
+        </TFormItem>
+    </FormContent>
+</FormDialogButton>
+
+
+@inject HttpClient Client
+
+@code {
+    async Task<DataSource<WeatherForecast>> GetData()
+    {
+        var data = WeatherForecast.Gets();
+        return DataSource<WeatherForecast>.Parse(data);
+    }
+
+    Task<WeatherForecast?> Get()
+    {
+        var data = WeatherForecast.Gets().SingleOrDefault(m => m.Id == 1);
+        return Task.FromResult(data);
+    }
+}

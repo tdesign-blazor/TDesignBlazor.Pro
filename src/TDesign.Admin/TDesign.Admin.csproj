@@ -25,4 +25,8 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\..\..\TDesignBlazor\src\TDesign\TDesign.csproj" />
 	</ItemGroup>
+	
+	<ItemGroup>
+	  <Folder Include="Annotations\" />
+	</ItemGroup>
 </Project>
