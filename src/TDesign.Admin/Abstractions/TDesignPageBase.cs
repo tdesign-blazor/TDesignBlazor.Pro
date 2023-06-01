@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace TDesign.Admin.Abstractions;
+namespace TDesign.Admin;
 
 /// <summary>
 /// 表示页面基类。

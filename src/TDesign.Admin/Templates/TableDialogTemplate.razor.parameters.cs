@@ -52,7 +52,7 @@ partial class TableDialogTemplate<TCreate, TUpdate, TDetail, TList, TListFilter>
     /// <summary>
     /// 返回一个布尔值，表示创建权限的逻辑方法。
     /// </summary>
-    /// <value>有创建权限，则返回 <c>true</c>；否则返回 <c>false</c>。</value>
+    /// <value>有权限，则返回 <c>true</c>；否则返回 <c>false</c>。</value>
     [Parameter] public Func<bool> CreatePermissionProvider { get; set; } = () => true;
 
     internal string? CreateDialogTitle => $"{CreateActionName}{PageTitle}";
@@ -86,12 +86,43 @@ partial class TableDialogTemplate<TCreate, TUpdate, TDetail, TList, TListFilter>
     /// <summary>
     /// 返回一个布尔值，表示编辑权限的逻辑方法。
     /// </summary>
-    /// <value>有编辑权限，则返回 <c>true</c>；否则返回 <c>false</c>。</value>
+    /// <value>有权限，则返回 <c>true</c>；否则返回 <c>false</c>。</value>
     [Parameter] public Func<bool> EditPermissionProvider { get; set; } = () => true;
 
     /// <summary>
     /// 设置 <typeparamref name="TDetail"/> 映射到 <typeparamref name="TUpdate"/> 模型的方法。
     /// </summary>
     [Parameter] public Func<TDetail?, TUpdate?> MapDetailToUpdateProvider { get; set; } = (detail) => detail as TUpdate;
+    #endregion
+
+    #region 删除相关的参数
+    /// <summary>
+    /// 返回一个布尔值，表示删除权限的逻辑方法。
+    /// </summary>
+    /// <value>有权限，则返回 <c>true</c>；否则返回 <c>false</c>。</value>
+    [Parameter] public Func<bool> DeletePermissionProvider { get; set; } = () => true;
+    /// <summary>
+    /// 设置删除操作的任意内容。
+    /// </summary>
+    [Parameter]public RenderFragment<TList>? DeleteOperationContent { get; set; }
+    /// <summary>
+    /// 当点击确定后的删除方法。
+    /// </summary>
+    [Parameter]public EventCallback<TList> OnConfirmDeleting { get; set; }
+    /// <summary>
+    /// 设置删除操作的图标，默认是 <see cref="IconName.Delete"/>。
+    /// </summary>
+    [Parameter] public object? DeleteIcon { get; set; } = IconName.Delete;
+    /// <summary>
+    /// 设置删除操作的名称，默认是【删除】。
+    /// </summary>
+    [Parameter] public string? DeleteActionName { get; set; } = "删除";
+
+    /// <summary>
+    /// 设置删除提示的消息。
+    /// </summary>
+    [Parameter] public Func<TList, string>? DeleteMessageProvider { get; set; } = (item) => "你确定要删除吗";
+
+    internal string? DeleteDialogTitle => $"{DeleteActionName}{PageTitle}";
     #endregion
 }

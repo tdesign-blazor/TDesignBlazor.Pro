@@ -4,6 +4,8 @@
 @typeparam TList
 @typeparam TListFilter
 
+@inherits TDesignPageBase
+
 <PageTitle>@PageTitle</PageTitle>
 
 <h2>@PageTitle</h2>
@@ -12,14 +14,12 @@
     <TColumn Span="ColumnSpan.Is11">
         @SearchContent
     </TColumn>
-        <TColumn Span="ColumnSpan.Is1">
-    @if (CreatePermissionProvider())
+    <TColumn Span="ColumnSpan.Is1">
+        @if ( CreatePermissionProvider() )
         {
-            <FormDialogButton TModel="TCreate" Block
-                              Text="@(CreateDialogTitle)"
-                              ChildContent="CreateFormContent"
-                              OnSubmit="OnFormCreating"
-                              OnDialogClosed="SubmittedCreateForm" />
+            <FormDialogButton TModel="TCreate" Block Text="@(CreateDialogTitle)" OnSubmit="OnFormCreating" OnDialogClosed="SubmittedCreateForm">
+                @CreateFormContent
+            </FormDialogButton>
         }
     </TColumn>
 </TRow>
@@ -27,9 +27,19 @@
     @TableColumnContent
 
     <TTableFieldColumn Header="操作" TItem="TList" TField="object" Field="m=>Key">
-        @if ( EditPermissionProvider() )
-        {
-            @EditOperationContent?.Invoke(context)
-        }
+        <TSpace>
+            @if ( EditPermissionProvider() )
+            {
+                <TSpaceItem>
+                    @EditOperationContent?.Invoke(context)
+                </TSpaceItem>
+            }
+            @if ( DeletePermissionProvider() )
+            {
+                <TSpaceItem>
+                    @DeleteOperationContent?.Invoke(context)
+                </TSpaceItem>
+            }
+        </TSpace>
     </TTableFieldColumn>
 </TTable>

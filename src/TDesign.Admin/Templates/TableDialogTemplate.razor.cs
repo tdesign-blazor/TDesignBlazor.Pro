@@ -2,11 +2,11 @@
 using TDesign.Admin.Components;
 
 namespace TDesign.Admin.Templates;
-partial class TableDialogTemplate<TCreate, TUpdate, TDetail, TList, TListFilter> : ComponentBase
-    where TCreate : class,new()
-    where TUpdate : class,new()
+partial class TableDialogTemplate<TCreate, TUpdate, TDetail, TList, TListFilter>
+    where TCreate : class, new()
+    where TUpdate : class, new()
     where TList : class, new()
-    where TDetail : class,new()
+    where TDetail : class, new()
     where TListFilter : class, new()
 {
     internal DataSource<TList> TableDataSource { get; set; }
@@ -14,26 +14,35 @@ partial class TableDialogTemplate<TCreate, TUpdate, TDetail, TList, TListFilter>
 
     protected override void OnInitialized()
     {
-        if(Key is null )
+        if ( Key is null )
         {
             throw new ArgumentNullException(nameof(Key));
         }
 
-        EditOperationContent = rowValue => 
+        EditOperationContent = rowValue =>
                             builder => builder.Component<FormDialogLink<TUpdate>>()
-                                            .Attribute(nameof(FormDialogLink<TUpdate>.DialogTitle),$"{EditActionName}{PageTitle}")
-                                            .Attribute(nameof(FormDialogLink<TUpdate>.Text),EditActionName)
+                                            .Attribute(nameof(FormDialogLink<TUpdate>.DialogTitle), $"{EditActionName}{PageTitle}")
+                                            .Attribute(nameof(FormDialogLink<TUpdate>.Text), EditActionName)
                                             .Attribute(nameof(FormDialogLink<TUpdate>.IconName), EditIcon)
                                             .Attribute(nameof(FormDialogLink<TUpdate>.OnSubmit), OnFormUpdating)
                                             .Attribute(nameof(FormDialogLink<TUpdate>.OnDialogClosed), HtmlHelper.Instance.Callback().Create<Task<DialogResult>>(this, SubmittedUpdateForm))
-                                            .Attribute(nameof(FormDialogLink<TUpdate>.ModelProvider),()=> GetDetailData(rowValue,Key))
-                                            .Attribute(nameof(FormDialogLink < TUpdate >.ChildContent ),(RenderFragment<TUpdate>)(model=> async builder =>
+                                            .Attribute(nameof(FormDialogLink<TUpdate>.ModelProvider), () => GetDetailData(rowValue, Key))
+                                            .Attribute(nameof(FormDialogLink<TUpdate>.ChildContent), (RenderFragment<TUpdate>)(model => async builder =>
                                             {
                                                 var detail = await GetDetailData(rowValue, Key);
                                                 var update = MapDetailToUpdateProvider(detail);
                                                 builder.AddContent(0, EditFormContent?.Invoke(update!));
                                             }))
                                             .Close();
+
+        DeleteOperationContent = rowValue =>
+                            builder => builder.Component<TLink>()
+                                            .Attribute(nameof(TLink.Hover), LinkHover.Underline)
+                                            .Attribute(nameof(TLink.Theme), Theme.Danger)
+                                            .Attribute("onclick",HtmlHelper.Instance.Callback().Create(this,()=>ShowDialogAndSubmitToDelete(rowValue)))
+                                            .ChildContent(builder => builder.Component<TIcon>(DeleteIcon is not null).Attribute(nameof(TIcon.Name), DeleteIcon).Close().Content(DeleteActionName))
+                                            .Close();
+
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -49,7 +58,7 @@ partial class TableDialogTemplate<TCreate, TUpdate, TDetail, TList, TListFilter>
         StateHasChanged();
     }
 
-    Task<TDetail?> GetDetailData(TList? item, Func<TList?,object> key)
+    Task<TDetail?> GetDetailData(TList? item, Func<TList?, object> key)
     {
         if ( DetailDataSourceProvider is null )
         {
@@ -64,10 +73,10 @@ partial class TableDialogTemplate<TCreate, TUpdate, TDetail, TList, TListFilter>
         var resultData = await result;
         if ( !resultData.Cancelled )
         {
-           await GetListData();
+            await GetListData();
         }
     }
-    
+
     Task SubmittedUpdateForm(Task<DialogResult> result)
     {
         return RefreshListData(result).ContinueWith(t => OnFormUpdated);
@@ -76,5 +85,18 @@ partial class TableDialogTemplate<TCreate, TUpdate, TDetail, TList, TListFilter>
     Task SubmittedCreateForm(Task<DialogResult> result)
     {
         return RefreshListData(result).ContinueWith(t => OnFormCreated);
+    }
+
+    async Task ShowDialogAndSubmitToDelete(TList item)
+    {
+        var deleteMessage = DeleteMessageProvider?.Invoke(item);
+
+        var dialog = await DialogService.Open<TDesign.Templates.ConfirmationDialogTemplate>(deleteMessage, DeleteDialogTitle, IconName.InfoCircle, Theme.Primary);
+        var result = await dialog.Result;
+        if ( !result.Cancelled )
+        {
+            await OnConfirmDeleting!.InvokeAsync(item);
+            await GetListData();
+        }
     }
 }

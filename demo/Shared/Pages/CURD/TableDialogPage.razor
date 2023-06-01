@@ -15,6 +15,7 @@
                      DetailDataSourceProvider="Get"
                      OnFormCreating="Create"
                      OnFormUpdating="Update"
+                     OnConfirmDeleting="Delete"
                      Key="m=>m.Id"
 >
     <CreateFormContent>
@@ -69,6 +70,12 @@
         var data = WeatherForecast.Gets().SingleOrDefault(m => m.Id.Equals(model.Id));
         data.TemperatureC = model.TemperatureC;
         data.Summary = model.Summary;
+        return Task.CompletedTask;
+    }
+
+    Task Delete(WeatherForecast model)
+    {
+        WeatherForecast.Data.Remove(model);
         return Task.CompletedTask;
     }
 }
