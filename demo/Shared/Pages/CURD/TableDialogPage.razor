@@ -1,25 +1,46 @@
 ﻿@page "/templates/table_dialog"
+@using System.Linq.Expressions;
 
 <PageHeader Title="表格和对话框模板">
     使用表格和对话框实现增删改查的页面功能
 </PageHeader>
 
-<FormDialogButton TModel="WeatherForecast" DialogTitle="创建" ButtonText="新增">
-    <FormContent>
-        <TFormItem For="()=>context.Summary" Label="名称">
+<TableDialogTemplate TCreate="WeatherForecast"
+                     TUpdate="WeatherForecast"
+                     TList="WeatherForecast"
+                     TListFilter="WeatherForecast"
+                     TDetail="WeatherForecast"
+                     PageTitle="天气"
+                     ListDataSourceProvider="GetData"
+                     DetailDataSourceProvider="Get"
+                     OnFormCreating="Create"
+                     OnFormUpdating="Update"
+                     Key="m=>m.Id"
+>
+    <CreateFormContent>
+        <TFormItem For="()=>context.TemperatureC" Label="城市">
             <TInputText @bind-Value="context.Summary" />
         </TFormItem>
-    </FormContent>
-</FormDialogButton>
-
-
-<FormDialogButton TModel="WeatherForecast" DialogTitle="编辑" ButtonText="编辑" ModelProvider="Get">
-    <FormContent>
-        <TFormItem For="()=>context.Summary" Label="名称">
+        <TFormItem For="()=>context.TemperatureC" Label="摄氏度">
+            <TInputText @bind-Value="context.TemperatureC" />
+        </TFormItem>
+    </CreateFormContent>
+    <EditFormContent>
+        <TFormItem For="()=>context.TemperatureC" Label="城市">
             <TInputText @bind-Value="context.Summary" />
         </TFormItem>
-    </FormContent>
-</FormDialogButton>
+        <TFormItem For="()=>context.TemperatureC" Label="摄氏度">
+            <TInputText @bind-Value="context.TemperatureC" />
+        </TFormItem>
+    </EditFormContent>
+    <TableColumnContent>
+        <TTableFieldColumn Header="Id" TItem="WeatherForecast" TField="int" Field="p=>p.Id" />
+        <TTableFieldColumn Header="日期" TItem="WeatherForecast" TField="DateOnly" Field="p=>p.Date" Format="yyyy-MM-dd" />
+        <TTableFieldColumn Header="摄氏度" TItem="WeatherForecast" TField="int" Field="p=>p.TemperatureC" />
+        <TTableFieldColumn Header="华氏度" TItem="WeatherForecast" TField="int" Field="p=>p.TemperatureF" />
+        <TTableFieldColumn Header="备注" TItem="WeatherForecast" TField="string" Field="p=>p.Summary" />
+    </TableColumnContent>
+</TableDialogTemplate>
 
 
 @inject HttpClient Client
@@ -27,13 +48,27 @@
 @code {
     async Task<DataSource<WeatherForecast>> GetData()
     {
-        var data = WeatherForecast.Gets();
+        var data = WeatherForecast.Data;
         return DataSource<WeatherForecast>.Parse(data);
     }
 
-    Task<WeatherForecast?> Get()
+    Task<WeatherForecast?> Get(object key)
     {
-        var data = WeatherForecast.Gets().SingleOrDefault(m => m.Id == 1);
+        var data = WeatherForecast.Gets().SingleOrDefault(m => m.Id.Equals(key));
         return Task.FromResult(data);
+    }
+
+    Task Create(WeatherForecast model)
+    {
+        WeatherForecast.Data.Add(model);
+        return Task.CompletedTask;
+    }
+
+    Task Update(WeatherForecast model)
+    {
+        var data = WeatherForecast.Gets().SingleOrDefault(m => m.Id.Equals(model.Id));
+        data.TemperatureC = model.TemperatureC;
+        data.Summary = model.Summary;
+        return Task.CompletedTask;
     }
 }

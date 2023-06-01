@@ -18,12 +18,8 @@
 		<SupportedPlatform Include="browser" />
 	</ItemGroup>
 	
-	<!--<ItemGroup>
-		<PackageReference Include="TDesign" Version="*" />
-	</ItemGroup>-->
-	
 	<ItemGroup>
-	  <ProjectReference Include="..\..\..\TDesignBlazor\src\TDesign\TDesign.csproj" />
+		<PackageReference Include="TDesign" Version="0.6" />
 	</ItemGroup>
 	
 	<ItemGroup>

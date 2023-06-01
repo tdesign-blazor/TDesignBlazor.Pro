@@ -1,0 +1,35 @@
+﻿@typeparam TCreate
+@typeparam TUpdate
+@typeparam TDetail
+@typeparam TList
+@typeparam TListFilter
+
+<PageTitle>@PageTitle</PageTitle>
+
+<h2>@PageTitle</h2>
+
+<TRow>
+    <TColumn Span="ColumnSpan.Is11">
+        @SearchContent
+    </TColumn>
+        <TColumn Span="ColumnSpan.Is1">
+    @if (CreatePermissionProvider())
+        {
+            <FormDialogButton TModel="TCreate" Block
+                              Text="@(CreateDialogTitle)"
+                              ChildContent="CreateFormContent"
+                              OnSubmit="OnFormCreating"
+                              OnDialogClosed="SubmittedCreateForm" />
+        }
+    </TColumn>
+</TRow>
+<TTable TItem="TList" Data="TableDataSource" style="margin-top:10px" Pagination>
+    @TableColumnContent
+
+    <TTableFieldColumn Header="操作" TItem="TList" TField="object" Field="m=>Key">
+        @if ( EditPermissionProvider() )
+        {
+            @EditOperationContent?.Invoke(context)
+        }
+    </TTableFieldColumn>
+</TTable>

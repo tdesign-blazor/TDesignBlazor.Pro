@@ -1,0 +1,97 @@
+﻿using System.Linq.Expressions;
+
+namespace TDesign.Admin.Templates;
+partial class TableDialogTemplate<TCreate, TUpdate, TDetail, TList, TListFilter>
+{
+    /// <summary>
+    /// 页面的标题。
+    /// </summary>
+    [Parameter] public string? PageTitle { get; set; } = "未标题页面";
+
+    /// <summary>
+    /// 设置查询过滤的任意内容。
+    /// </summary>
+    [Parameter]public RenderFragment<TListFilter>? SearchContent { get; set; }
+
+    #region 表格相关的参数
+    /// <summary>
+    /// 设置获取列表数据源的委托。
+    /// </summary>
+    [Parameter][EditorRequired] public Func<Task<DataSource<TList>>> ListDataSourceProvider { get; set; }
+
+    [Parameter]public RenderFragment? TableColumnContent { get; set; }
+
+    /// <summary>
+    /// 获取单个数据源的委托。该委托用于更新前获取数据或详情数据。
+    /// </summary>
+    [Parameter]public Func<object, Task<TDetail?>>? DetailDataSourceProvider { get; set; }
+
+    /// <summary>
+    /// 设置列表的主键，用于更新和删除操作。
+    /// </summary>
+    [Parameter][EditorRequired] public Func<TList?, object>? Key { get; set; }
+    #endregion
+
+    #region 创建相关的参数
+    /// <summary>
+    /// 设置创建操作的名称，默认是【创建】。
+    /// </summary>
+    [Parameter] public string? CreateActionName { get; set; } = "创建";
+    /// <summary>
+    /// 设置创建操作的表单内容。
+    /// </summary>
+    [Parameter]public RenderFragment<TCreate>? CreateFormContent { get; set; }
+    /// <summary>
+    /// 当表单的验证成功后，提交创建时触发的回调方法。
+    /// </summary>
+    [Parameter]public EventCallback<TCreate> OnFormCreating { get; set; }
+    /// <summary>
+    /// 当创建对话框关闭后触发的事件。
+    /// </summary>
+    [Parameter]public EventCallback<DialogResult> OnFormCreated { get; set; }
+    /// <summary>
+    /// 返回一个布尔值，表示创建权限的逻辑方法。
+    /// </summary>
+    /// <value>有创建权限，则返回 <c>true</c>；否则返回 <c>false</c>。</value>
+    [Parameter] public Func<bool> CreatePermissionProvider { get; set; } = () => true;
+
+    internal string? CreateDialogTitle => $"{CreateActionName}{PageTitle}";
+    #endregion
+
+    #region 更新相关的参数
+    /// <summary>
+    /// 设置编辑操作的名称，默认是【编辑】。
+    /// </summary>
+    [Parameter] public string? EditActionName { get; set; } = "编辑";
+    /// <summary>
+    /// 设置编辑操作的表单内容。
+    /// </summary>
+    [Parameter]public RenderFragment<TUpdate>? EditFormContent { get; set; }
+    /// <summary>
+    /// 设置编辑操作的图标，默认是 <see cref="IconName.Edit"/>。
+    /// </summary>
+    [Parameter] public object? EditIcon { get; set; } = IconName.Edit;
+    /// <summary>
+    /// 编辑操作的任意内容。
+    /// </summary>
+    [Parameter]public RenderFragment<TList?>? EditOperationContent { get; set; }
+    /// <summary>
+    /// 设置一个回调方法，当编辑表单提交更新操作时触发的事件。
+    /// </summary>
+    [Parameter] public EventCallback<TUpdate> OnFormUpdating { get; set; }
+    /// <summary>
+    /// 设置一个回调方法，当编辑表单窗口关闭后触发的事件。
+    /// </summary>
+    [Parameter] public EventCallback<DialogResult> OnFormUpdated { get; set; } 
+    /// <summary>
+    /// 返回一个布尔值，表示编辑权限的逻辑方法。
+    /// </summary>
+    /// <value>有编辑权限，则返回 <c>true</c>；否则返回 <c>false</c>。</value>
+    [Parameter] public Func<bool> EditPermissionProvider { get; set; } = () => true;
+
+    /// <summary>
+    /// 设置 <typeparamref name="TDetail"/> 映射到 <typeparamref name="TUpdate"/> 模型的方法。
+    /// </summary>
+    [Parameter] public Func<TDetail?, TUpdate?> MapDetailToUpdateProvider { get; set; } = (detail) => detail as TUpdate;
+    #endregion
+}
