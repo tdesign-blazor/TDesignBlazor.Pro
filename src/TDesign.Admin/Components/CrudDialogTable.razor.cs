@@ -154,7 +154,7 @@ partial class CrudDialogTable<TCreate, TUpdate, TDetail, TList, TListFilter>
                                 .Attribute(nameof(FormDialogButton<TCreate>.ButtonContent), (RenderFragment)(content => content.Component<TIcon>().Attribute(nameof(TIcon.Name), CreateActionIcon).Close()))
                                 .Attribute(nameof(FormDialogButton<TCreate>.OnSubmit), OnFormCreating)
                                 .Attribute(nameof(FormDialogButton<TCreate>.OnDialogClosed), HtmlHelper.Instance.Callback().Create<Task<DialogResult>>(this, CloseCreateForm))
-                                .ChildContent(CreateFormContent?.Invoke(new()))
+                                .Attribute(nameof(FormDialogButton<TCreate>.ChildContent), (RenderFragment<TCreate>?)(model => builder => builder.AddContent(0, CreateFormContent, model)))
                             .Close();
     }
 }

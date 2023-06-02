@@ -5,49 +5,184 @@
     使用表格和对话框实现增删改查的页面功能
 </PageHeader>
 
-<CrudDialogTable TCreate="WeatherForecast"
-                     TUpdate="WeatherForecast"
-                     TList="WeatherForecast"
-                     TListFilter="WeatherForecast"
-                     TDetail="WeatherForecast"
-                     PageTitle="天气"
-                     ListDataSourceProvider="GetData"
-                     DetailDataSourceProvider="Get"
-                     OnFormCreating="Create"
-                     OnFormUpdating="Update"
-                     OnConfirmDeleting="Delete"
-                     Key="m=>m.Id">
+<TTab>
+    <TTabItem Title="运行">
+        <CrudDialogTable TCreate="WeatherForecast"
+                         TUpdate="WeatherForecast"
+                         TList="WeatherForecast"
+                         TListFilter="WeatherForecast"
+                         TDetail="WeatherForecast"
+                         PageTitle="天气"
+                         ListDataSourceProvider="GetData"
+                         DetailDataSourceProvider="Get"
+                         OnFormCreating="Create"
+                         OnFormUpdating="Update"
+                         OnConfirmDeleting="Delete"
+                         Key="m=>m.Id">
+            <ListFilterFormContent>
+                <TFormItem For="()=>context.TemperatureC" Label="城市">
+                    <TInputText @bind-Value="context.Summary" />
+                </TFormItem>
+
+            </ListFilterFormContent>
+            <CreateFormContent>
+                <TFormItem For="()=>context.Summary" Label="城市">
+                    <TInputText @bind-Value="context.Summary" />
+                </TFormItem>
+                <TFormItem For="()=>context.TemperatureC" Label="摄氏度">
+                    <TInputText @bind-Value="context.TemperatureC" />
+                </TFormItem>
+            </CreateFormContent>
+            <EditFormContent>
+                <TFormItem For="()=>context.Summary" Label="城市">
+                    <TInputText @bind-Value="context.Summary" />
+                </TFormItem>
+                <TFormItem For="()=>context.TemperatureC" Label="摄氏度">
+                    <TInputText @bind-Value="context.TemperatureC" />
+                </TFormItem>
+            </EditFormContent>
+            <TableColumnContent>
+                <TTableFieldColumn Header="Id" TItem="WeatherForecast" TField="int" Field="p=>p.Id" />
+                <TTableFieldColumn Header="日期" TItem="WeatherForecast" TField="DateOnly" Field="p=>p.Date" Format="yyyy-MM-dd" />
+                <TTableFieldColumn Header="摄氏度" TItem="WeatherForecast" TField="int" Field="p=>p.TemperatureC" />
+                <TTableFieldColumn Header="华氏度" TItem="WeatherForecast" TField="int" Field="p=>p.TemperatureF" />
+                <TTableFieldColumn Header="备注" TItem="WeatherForecast" TField="string" Field="p=>p.Summary" />
+            </TableColumnContent>
+        </CrudDialogTable>
+    </TTabItem>
+    <TTabItem Title="代码">
+        @Code.Create(@"
+```html
+<CrudDialogTable TCreate=""WeatherForecast""
+                    TUpdate=""WeatherForecast""
+                    TList=""WeatherForecast""
+                    TListFilter=""WeatherForecast""
+                    TDetail=""WeatherForecast""
+                    PageTitle=""天气""
+                    ListDataSourceProvider=""GetData""
+                    DetailDataSourceProvider=""Get""
+                    OnFormCreating=""Create""
+                    OnFormUpdating=""Update""
+                    OnConfirmDeleting=""Delete""
+                    Key=""m=>m.Id"">
     <ListFilterFormContent>
-        <TFormItem For="()=>context.TemperatureC" Label="城市">
-            <TInputText @bind-Value="context.Summary" />
+        <TFormItem For=""()=>context.TemperatureC"" Label=""城市"">
+            <TInputText @bind-Value=""context.Summary"" />
         </TFormItem>
 
     </ListFilterFormContent>
     <CreateFormContent>
-        <TFormItem For="()=>context.Summary" Label="城市">
-            <TInputText @bind-Value="context.Summary" />
+        <TFormItem For=""()=>context.Summary"" Label=""城市"">
+            <TInputText @bind-Value=""context.Summary"" />
         </TFormItem>
-        <TFormItem For="()=>context.TemperatureC" Label="摄氏度">
-            <TInputText @bind-Value="context.TemperatureC" />
+        <TFormItem For=""()=>context.TemperatureC"" Label=""摄氏度"">
+            <TInputText @bind-Value=""context.TemperatureC"" />
         </TFormItem>
     </CreateFormContent>
     <EditFormContent>
-        <TFormItem For="()=>context.Summary" Label="城市">
-            <TInputText @bind-Value="context.Summary" />
+        <TFormItem For=""()=>context.Summary"" Label=""城市"">
+            <TInputText @bind-Value=""context.Summary"" />
         </TFormItem>
-        <TFormItem For="()=>context.TemperatureC" Label="摄氏度">
-            <TInputText @bind-Value="context.TemperatureC" />
+        <TFormItem For=""()=>context.TemperatureC"" Label=""摄氏度"">
+            <TInputText @bind-Value=""context.TemperatureC"" />
         </TFormItem>
     </EditFormContent>
     <TableColumnContent>
-        <TTableFieldColumn Header="Id" TItem="WeatherForecast" TField="int" Field="p=>p.Id" />
-        <TTableFieldColumn Header="日期" TItem="WeatherForecast" TField="DateOnly" Field="p=>p.Date" Format="yyyy-MM-dd" />
-        <TTableFieldColumn Header="摄氏度" TItem="WeatherForecast" TField="int" Field="p=>p.TemperatureC" />
-        <TTableFieldColumn Header="华氏度" TItem="WeatherForecast" TField="int" Field="p=>p.TemperatureF" />
-        <TTableFieldColumn Header="备注" TItem="WeatherForecast" TField="string" Field="p=>p.Summary" />
+        <TTableFieldColumn Header=""Id"" TItem=""WeatherForecast"" TField=""int"" Field=""p=>p.Id"" />
+        <TTableFieldColumn Header=""日期"" TItem=""WeatherForecast"" TField=""DateOnly"" Field=""p=>p.Date"" Format=""yyyy-MM-dd"" />
+        <TTableFieldColumn Header=""摄氏度"" TItem=""WeatherForecast"" TField=""int"" Field=""p=>p.TemperatureC"" />
+        <TTableFieldColumn Header=""华氏度"" TItem=""WeatherForecast"" TField=""int"" Field=""p=>p.TemperatureF"" />
+        <TTableFieldColumn Header=""备注"" TItem=""WeatherForecast"" TField=""string"" Field=""p=>p.Summary"" />
     </TableColumnContent>
 </CrudDialogTable>
 
+
+@code {
+    async Task<DataSource<WeatherForecast>> GetData(WeatherForecast filter)
+    {
+        var data = WeatherForecast.Data;
+        return DataSource<WeatherForecast>.Parse(data);
+    }
+
+    Task<WeatherForecast?> Get(object key)
+    {
+        var data = WeatherForecast.Gets().SingleOrDefault(m => m.Id.Equals(key));
+        return Task.FromResult(data);
+    }
+
+    Task Create(WeatherForecast model)
+    {
+        WeatherForecast.Data.Add(model);
+        return Task.CompletedTask;
+    }
+
+    Task Update(WeatherForecast model)
+    {
+        var data = WeatherForecast.Gets().SingleOrDefault(m => m.Id.Equals(model.Id));
+        data.TemperatureC = model.TemperatureC;
+        data.Summary = model.Summary;
+        return Task.CompletedTask;
+    }
+
+    Task Delete(WeatherForecast model)
+    {
+        WeatherForecast.Data.Remove(model);
+        return Task.CompletedTask;
+    }
+}
+```
+
+```cs
+public class WeatherForecast
+{
+    public int Id { get; set; }
+
+    public DateOnly Date { get; set; }
+
+    public int TemperatureC { get; set; }
+
+    [Required]
+    public string? Summary { get; set; } = string.Empty;
+
+    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+
+    public static IList<WeatherForecast> Data = new List<WeatherForecast>
+    {
+        new(){Id=1,Date=new DateOnly(2019,7,3), TemperatureC=37, Summary=""北京""},
+        new(){Id=2,Date=new DateOnly(2019,7,4), TemperatureC=36, Summary=""上海""},
+        new(){Id=3,Date=new DateOnly(2019,7,5), TemperatureC=35, Summary=""深圳""},
+        new(){Id=4,Date=new DateOnly(2019,7,6), TemperatureC=35, Summary=""广州""},
+        new(){Id=5,Date=new DateOnly(2019,7,7), TemperatureC=37, Summary=""沈阳""},
+        new(){Id=6,Date=new DateOnly(2019,7,8), TemperatureC=37, Summary=""武汉""},
+        new(){Id=7,Date=new DateOnly(2019,7,9), TemperatureC=33, Summary=""重庆""},
+        new(){Id=8,Date=new DateOnly(2019,7,10), TemperatureC=32, Summary=""成都""},
+        new(){Id=9,Date=new DateOnly(2019,7,11), TemperatureC=31, Summary=""贵阳""},
+        new(){Id=10,Date=new DateOnly(2019,7,12), TemperatureC=30, Summary=""西安""},
+        new(){Id=11,Date=new DateOnly(2019,7,13), TemperatureC=36, Summary=""郑州""},
+        new(){Id=12,Date=new DateOnly(2019,7,14), TemperatureC=35, Summary=""太原""},
+        new(){Id=13,Date=new DateOnly(2019,7,15), TemperatureC=33, Summary=""天津""},
+    };
+
+    public static IEnumerable<WeatherForecast> Gets()
+    {
+        return Data;
+    }
+
+    public static void Insert()
+    {
+        Data.Add(new()
+        {
+            Id = Data.Count + 1,
+            Summary = new Random().NextDouble().ToString(),
+            Date = Data[^1].Date.AddDays(1),
+            TemperatureC = new Random().Next(25, 40)
+        });
+    }
+}
+```
+")
+    </TTabItem>
+</TTab>
 
 @inject HttpClient Client
 
