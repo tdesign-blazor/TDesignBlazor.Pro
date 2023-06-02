@@ -47,7 +47,7 @@ partial class CrudDialogTable<TCreate, TUpdate, TDetail, TList, TListFilter>
                             builder => builder.Component<FormDialogLink<TUpdate>>()
                                             .Attribute(nameof(FormDialogLink<TUpdate>.DialogTitle), EditDialogTitle)
                                             .Attribute(nameof(FormDialogLink<TUpdate>.Text), EditActionName)
-                                            .Attribute(nameof(FormDialogLink<TUpdate>.IconName), EditIcon)
+                                            .Attribute(nameof(FormDialogLink<TUpdate>.IconName), EditActionIcon)
                                             .Attribute(nameof(FormDialogLink<TUpdate>.OnSubmit), OnFormUpdating)
                                             .Attribute(nameof(FormDialogLink<TUpdate>.OnDialogClosed), HtmlHelper.Instance.Callback().Create<Task<DialogResult>>(this, CloseUpdateForm))
                                             .Attribute(nameof(FormDialogLink<TUpdate>.ModelProvider), () => GetDetailData(rowValue, Key))
@@ -64,7 +64,7 @@ partial class CrudDialogTable<TCreate, TUpdate, TDetail, TList, TListFilter>
                                             .Attribute(nameof(TLink.Hover), LinkHover.Underline)
                                             .Attribute(nameof(TLink.Theme), Theme.Danger)
                                             .Attribute("onclick",HtmlHelper.Instance.Callback().Create(this,()=> ShowDialogAndCofirmToDelete(rowValue)))
-                                            .ChildContent(builder => builder.Component<TIcon>(DeleteIcon is not null).Attribute(nameof(TIcon.Name), DeleteIcon).Close().Content(DeleteActionName))
+                                            .ChildContent(builder => builder.Component<TIcon>(DeleteActionIcon is not null).Attribute(nameof(TIcon.Name), DeleteActionIcon).Close().Content(DeleteActionName))
                                             .Close();
 
         ListFilterFormSubmitContent = builder => builder.Component<TButton>()
@@ -153,7 +153,7 @@ partial class CrudDialogTable<TCreate, TUpdate, TDetail, TList, TListFilter>
         => builder => builder.Component<FormDialogButton<TCreate>>(CreatePermissionProvider())
                                 .Attribute(nameof(FormDialogButton<TCreate>.DialogTitle), CreateDialogTitle)
                                 .Attribute("title", CreateActionName)
-                                .Attribute(nameof(FormDialogButton<TCreate>.ButtonContent), (RenderFragment)(content => content.Component<TIcon>().Attribute(nameof(TIcon.Name), CreateIcon).Close()))
+                                .Attribute(nameof(FormDialogButton<TCreate>.ButtonContent), (RenderFragment)(content => content.Component<TIcon>().Attribute(nameof(TIcon.Name), CreateActionIcon).Close()))
                                 .Attribute(nameof(FormDialogButton<TCreate>.OnSubmit), OnFormCreating)
                                 .Attribute(nameof(FormDialogButton<TCreate>.OnDialogClosed), HtmlHelper.Instance.Callback().Create<Task<DialogResult>>(this, CloseCreateForm))
                                 .ChildContent(CreateFormContent?.Invoke(new()))

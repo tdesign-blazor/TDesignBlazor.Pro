@@ -64,7 +64,10 @@ partial class CrudDialogTable<TCreate, TUpdate, TDetail, TList, TListFilter>
     /// </summary>
     /// <value>有权限，则返回 <c>true</c>；否则返回 <c>false</c>。</value>
     [Parameter] public Func<bool> CreatePermissionProvider { get; set; } = () => true;
-    [Parameter] public object? CreateIcon { get; set; } = IconName.Add;
+    /// <summary>
+    /// 创建操作的图标。
+    /// </summary>
+    [Parameter] public object? CreateActionIcon { get; set; } = IconName.Add;
     #endregion
 
     #region 更新相关的参数
@@ -79,7 +82,7 @@ partial class CrudDialogTable<TCreate, TUpdate, TDetail, TList, TListFilter>
     /// <summary>
     /// 设置编辑操作的图标，默认是 <see cref="IconName.Edit"/>。
     /// </summary>
-    [Parameter] public object? EditIcon { get; set; } = IconName.Edit;
+    [Parameter] public object? EditActionIcon { get; set; } = IconName.Edit;
     /// <summary>
     /// 编辑操作的任意内容。
     /// </summary>
@@ -121,7 +124,7 @@ partial class CrudDialogTable<TCreate, TUpdate, TDetail, TList, TListFilter>
     /// <summary>
     /// 设置删除操作的图标，默认是 <see cref="IconName.Delete"/>。
     /// </summary>
-    [Parameter] public object? DeleteIcon { get; set; } = IconName.Delete;
+    [Parameter] public object? DeleteActionIcon { get; set; } = IconName.Delete;
     /// <summary>
     /// 设置删除操作的名称，默认是【删除】。
     /// </summary>
