@@ -1,4 +1,4 @@
-﻿namespace TDesign.Admin.Templates;
+﻿namespace TDesign.Admin.Components;
 partial class CrudDialogTable<TCreate, TUpdate, TDetail, TList, TListFilter>
 {
     /// <summary>

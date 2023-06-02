@@ -1,6 +1,4 @@
-﻿using TDesign.Admin.Components;
-
-namespace TDesign.Admin.Templates;
+﻿namespace TDesign.Admin.Components;
 
 /// <summary>
 /// 具备 CRUD 功能的表格，将使用 <see cref="TDialog"/> 对话框来打开表单。
