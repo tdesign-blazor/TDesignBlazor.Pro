@@ -1,23 +1,33 @@
-﻿using System.Linq.Expressions;
-
-namespace TDesign.Admin.Templates;
-partial class TableDialogTemplate<TCreate, TUpdate, TDetail, TList, TListFilter>
+﻿namespace TDesign.Admin.Templates;
+partial class CrudDialogTable<TCreate, TUpdate, TDetail, TList, TListFilter>
 {
     /// <summary>
     /// 页面的标题。
     /// </summary>
     [Parameter] public string? PageTitle { get; set; } = "未标题页面";
 
+    #region 搜索相关的参数
     /// <summary>
-    /// 设置查询过滤的任意内容。
+    /// 列表过滤的表单任意内容。
     /// </summary>
-    [Parameter]public RenderFragment<TListFilter>? SearchContent { get; set; }
+    [Parameter]public RenderFragment<TListFilter>? ListFilterFormContent { get; set; }
+
+    /// <summary>
+    /// 列表过滤表单的查询提交任意内容。默认是提交按钮。
+    /// </summary>
+    [Parameter]public RenderFragment? ListFilterFormSubmitContent { get; set; }
+    /// <summary>
+    ///列表过滤表单的重置任意内容。默认是重置按钮。
+    /// </summary>
+    [Parameter]public RenderFragment? ListFilterFormResetContent { get; set; }
+    
+    #endregion
 
     #region 表格相关的参数
     /// <summary>
     /// 设置获取列表数据源的委托。
     /// </summary>
-    [Parameter][EditorRequired] public Func<Task<DataSource<TList>>> ListDataSourceProvider { get; set; }
+    [Parameter][EditorRequired] public Func<TListFilter, Task<DataSource<TList>>> ListDataSourceProvider { get; set; }
 
     [Parameter]public RenderFragment? TableColumnContent { get; set; }
 
@@ -54,8 +64,7 @@ partial class TableDialogTemplate<TCreate, TUpdate, TDetail, TList, TListFilter>
     /// </summary>
     /// <value>有权限，则返回 <c>true</c>；否则返回 <c>false</c>。</value>
     [Parameter] public Func<bool> CreatePermissionProvider { get; set; } = () => true;
-
-    internal string? CreateDialogTitle => $"{CreateActionName}{PageTitle}";
+    [Parameter] public object? CreateIcon { get; set; } = IconName.Add;
     #endregion
 
     #region 更新相关的参数
@@ -123,6 +132,7 @@ partial class TableDialogTemplate<TCreate, TUpdate, TDetail, TList, TListFilter>
     /// </summary>
     [Parameter] public Func<TList, string>? DeleteMessageProvider { get; set; } = (item) => "你确定要删除吗";
 
-    internal string? DeleteDialogTitle => $"{DeleteActionName}{PageTitle}";
     #endregion
+
+    [Parameter]public Action<ICollection<RenderFragment?>>? ActionToolsProvider { get; set; }
 }

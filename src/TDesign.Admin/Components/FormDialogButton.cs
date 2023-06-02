@@ -53,6 +53,7 @@ public class FormDialogButton<TModel> : FormDialogComponentBase<TModel> where TM
             .Attribute(nameof(TButton.Shape), Shape)
             .Attribute(nameof(TButton.Disabled), Disabled)
             .Attribute(nameof(TButton.Size), ButtonSize)
+            .Attribute(nameof(TButton.AdditionalAttributes),AdditionalAttributes)
             .Attribute(nameof(TButton.OnClick), HtmlHelper.Instance.Callback().Create<MouseEventArgs>(this, OpenDialog))
             .ChildContent(ButtonContent)
             .Close();

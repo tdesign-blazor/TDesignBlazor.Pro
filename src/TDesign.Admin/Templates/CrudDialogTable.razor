@@ -1,0 +1,58 @@
+﻿@typeparam TCreate
+@typeparam TUpdate
+@typeparam TDetail
+@typeparam TList
+@typeparam TListFilter
+
+@inherits TDesignPageBase
+
+<PageTitle>@PageTitle</PageTitle>
+
+<h2>@PageTitle</h2>
+
+<TRow style="margin-bottom:10px">
+    <TColumn Span="ColumnSpan.Is12">
+        <TForm Model="FilterModel" Inline OnValidSubmit="GetListData">
+            <DataAnnotationsValidator/>
+            @ListFilterFormContent?.Invoke(FilterModel)
+            <TFormItem>
+                <TSpace>
+                    <TSpaceItem>@ListFilterFormSubmitContent</TSpaceItem>
+                    <TSpaceItem>@ListFilterFormResetContent</TSpaceItem>
+                </TSpace>
+            </TFormItem>
+        </TForm>
+    </TColumn>
+</TRow>
+<TRow style="margin-bottom:10px">
+    <TColumn Span="ColumnSpan.Is11">
+        <TSpace>
+            @foreach(var toolFragment in ActionTools)
+            {
+                <TSpaceItem>
+                    @toolFragment
+                </TSpaceItem>
+            }
+        </TSpace>
+    </TColumn>
+</TRow>
+<TTable TItem="TList" Data="TableDataSource" style="margin-top:10px" Pagination Hoverable >
+    @TableColumnContent
+
+    <TTableFieldColumn Header="操作" TItem="TList" TField="object" Field="m=>Key">
+        <TSpace>
+            @if ( EditPermissionProvider() )
+            {
+                <TSpaceItem>
+                    @EditOperationContent?.Invoke(context)
+                </TSpaceItem>
+            }
+            @if ( DeletePermissionProvider() )
+            {
+                <TSpaceItem>
+                    @DeleteOperationContent?.Invoke(context)
+                </TSpaceItem>
+            }
+        </TSpace>
+    </TTableFieldColumn>
+</TTable>

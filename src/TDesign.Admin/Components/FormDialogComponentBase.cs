@@ -38,6 +38,8 @@ public abstract class FormDialogComponentBase<TModel>: ComponentBase where TMode
     /// </summary>
     [Parameter] public Func<bool> ShowDialog { get; set; } = () => true;
 
+    [Parameter(CaptureUnmatchedValues = true)] public IDictionary<string, object> AdditionalAttributes { get; set; } = new Dictionary<string, object>();
+
     protected override void OnInitialized()
     {
         ModelProvider ??= () => Task.FromResult(new TModel());
