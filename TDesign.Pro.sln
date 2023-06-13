@@ -1,0 +1,59 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{03BADBAC-DF59-408D-A8DA-016AF2E0C66F}"
+	ProjectSection(SolutionItems) = preProject
+		common.props = common.props
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{12AA77A8-32EF-4A30-9634-BF7AD3020D11}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demo", "Demo", "{A5182A27-C6B2-4B6A-B96D-D3B584F48DAF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TDesign.Pro", "src\TDesign.Pro\TDesign.Pro.csproj", "{10FF7FF1-3702-4FB6-AA48-D565D53AF1A3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TDesign.Pro.Demo.Shared", "demo\TDesign.Pro.Demo.Shared\TDesign.Pro.Demo.Shared.csproj", "{43845523-E719-4A0B-A35A-158D694F7AA2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TDesign.Pro.Demo.Server", "demo\TDesign.Pro.Demo.Server\TDesign.Pro.Demo.Server.csproj", "{AA16BDE9-9957-45FE-9020-0DEF6C882A35}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TDesign.Pro.Demo.Client", "demo\TDesign.Pro.Demo.Client\TDesign.Pro.Demo.Client.csproj", "{0AC7914E-AB26-470A-8CEC-B5A277F7D600}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{10FF7FF1-3702-4FB6-AA48-D565D53AF1A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10FF7FF1-3702-4FB6-AA48-D565D53AF1A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10FF7FF1-3702-4FB6-AA48-D565D53AF1A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10FF7FF1-3702-4FB6-AA48-D565D53AF1A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43845523-E719-4A0B-A35A-158D694F7AA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43845523-E719-4A0B-A35A-158D694F7AA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43845523-E719-4A0B-A35A-158D694F7AA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43845523-E719-4A0B-A35A-158D694F7AA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA16BDE9-9957-45FE-9020-0DEF6C882A35}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA16BDE9-9957-45FE-9020-0DEF6C882A35}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA16BDE9-9957-45FE-9020-0DEF6C882A35}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA16BDE9-9957-45FE-9020-0DEF6C882A35}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AC7914E-AB26-470A-8CEC-B5A277F7D600}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AC7914E-AB26-470A-8CEC-B5A277F7D600}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AC7914E-AB26-470A-8CEC-B5A277F7D600}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AC7914E-AB26-470A-8CEC-B5A277F7D600}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{10FF7FF1-3702-4FB6-AA48-D565D53AF1A3} = {12AA77A8-32EF-4A30-9634-BF7AD3020D11}
+		{43845523-E719-4A0B-A35A-158D694F7AA2} = {A5182A27-C6B2-4B6A-B96D-D3B584F48DAF}
+		{AA16BDE9-9957-45FE-9020-0DEF6C882A35} = {A5182A27-C6B2-4B6A-B96D-D3B584F48DAF}
+		{0AC7914E-AB26-470A-8CEC-B5A277F7D600} = {A5182A27-C6B2-4B6A-B96D-D3B584F48DAF}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {148B15E8-AF51-46F0-A377-A0195240180E}
+	EndGlobalSection
+EndGlobal

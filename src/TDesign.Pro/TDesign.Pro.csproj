@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+	<Import Project="../../common.props" />
+	<PropertyGroup>
+		<RootNamespace>TDesign.Pro</RootNamespace>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Description>
+			基于 TDesignBlazor 的专业组件库，进一步提供比较复杂且适应应用开发的完整组件封装。
+		</Description>		
+		<PackageId>TDesign.Pro</PackageId>
+		<VersionPrefix>0.1</VersionPrefix>
+		<VersionSuffix>alpha</VersionSuffix>
+	</PropertyGroup>
+
+	
+	<ItemGroup>
+		<SupportedPlatform Include="browser" />
+	</ItemGroup>
+	
+	<ItemGroup>
+		<PackageReference Include="TDesign" Version="0.6.1" />
+	</ItemGroup>
+	
+	<ItemGroup>
+	  <Folder Include="Annotations\" />
+	</ItemGroup>
+</Project>

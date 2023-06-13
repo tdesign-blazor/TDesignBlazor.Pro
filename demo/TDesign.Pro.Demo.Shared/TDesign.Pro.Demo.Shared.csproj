@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+	  <IsPackable>false</IsPackable>
+  </PropertyGroup>
+  	<ItemGroup>
+		<PackageReference Include="Markdig" Version="0.30.2" />
+		<PackageReference Include="MarkdigExtensions.SyntaxHighlighting" Version="1.0.3" />
+	</ItemGroup>
+  	<ItemGroup>
+  	  <ProjectReference Include="..\..\src\TDesign.Pro\TDesign.Pro.csproj" />
+  	</ItemGroup>
+
+  <ItemGroup>
+    <SupportedPlatform Include="browser" />
+  </ItemGroup>
+</Project>

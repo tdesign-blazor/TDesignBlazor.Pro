@@ -1,7 +1,7 @@
 # TDesignBlazor.Admin
-基于 TDesignBlazor 组件库的后台管理模板库，封装了大量的基于后台管理的组件
+基于 TDesignBlazor 的专业组件库，进一步提供比较复杂且适应应用开发的完整组件封装。
 
-[**TDesignBlazor 组件库**](https://github.com/tdesign-blazor/TDesignBlazor)
+基础功能的[**TDesignBlazor 组件库**](https://github.com/tdesign-blazor/TDesignBlazor)
 
 
 
