@@ -43,13 +43,13 @@ public class FormDialogLink<TModel> : FormDialogComponentBase<TModel> where TMod
     protected override void BuildRenderTree(RenderTreeBuilder builder)
     {
         builder.Component<TLink>()
-            .Attribute(nameof(TLink.Size),Size)
-            .Attribute(nameof(TLink.Theme),Theme)
-            .Attribute(nameof(TLink.Underline),Underline)
-            .Attribute(nameof(TLink.Disabled),Disabled)
-            .Attribute(nameof(TLink.Hover),Hover)
+            .Attribute(m=>m.Size,Size)
+            .Attribute(m => m.Theme,Theme)
+            .Attribute(m => m.Underline,Underline)
+            .Attribute(m => m.Disabled,Disabled)
+            .Attribute(m => m.Hover,Hover)
+            .Attribute(m => m.ChildContent, content => content.Component<TIcon>(IconName is not null).Attribute(nameof(TIcon.Name), IconName).Close().Content(Text))
             .Attribute("onclick", HtmlHelper.Instance.Callback().Create<MouseEventArgs>(this, OpenDialog))
-            .ChildContent(content => content.Component<TIcon>(IconName is not null).Attribute(nameof(TIcon.Name),IconName).Close().Content(Text))
             .Close();
     }
 }

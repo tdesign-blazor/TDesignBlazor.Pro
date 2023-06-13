@@ -43,52 +43,53 @@ partial class CrudDialogTable<TCreate, TUpdate, TDetail, TList, TListFilter>
 
         EditOperationContent = rowValue =>
                             builder => builder.Component<FormDialogLink<TUpdate>>()
-                                            .Attribute(nameof(FormDialogLink<TUpdate>.DialogTitle), EditDialogTitle)
-                                            .Attribute(nameof(FormDialogLink<TUpdate>.Text), EditActionName)
-                                            .Attribute(nameof(FormDialogLink<TUpdate>.IconName), EditActionIcon)
-                                            .Attribute(nameof(FormDialogLink<TUpdate>.OnSubmit), OnFormUpdating)
-                                            .Attribute(nameof(FormDialogLink<TUpdate>.OnDialogClosed), HtmlHelper.Instance.Callback().Create<Task<DialogResult>>(this, CloseUpdateForm))
-                                            .Attribute(nameof(FormDialogLink<TUpdate>.ModelProvider), () => GetDetailData(rowValue, Key))
-                                            .Attribute(nameof(FormDialogLink<TUpdate>.ChildContent), (RenderFragment<TUpdate>)(model => async builder =>
+                                            .Attribute(m => m.DialogTitle, EditDialogTitle)
+                                            .Attribute(m => m.Text, EditActionName)
+                                            .Attribute(m => m.IconName, EditActionIcon)
+                                            .Attribute(m => m.OnSubmit, OnFormUpdating)
+                                            .Attribute(m => m.OnDialogClosed, HtmlHelper.Instance.Callback().Create<Task<DialogResult>>(this, CloseUpdateForm))
+                                            .Attribute(m => m.ModelProvider, async () =>
+                                            {
+                                                var detail = await GetDetailData(rowValue, Key);
+                                                var update = MapDetailToUpdateProvider(detail);
+                                                return update!;
+                                            })
+                                            .Attribute(m => m.ChildContent, model => async builder =>
                                             {
                                                 var detail = await GetDetailData(rowValue, Key);
                                                 var update = MapDetailToUpdateProvider(detail);
                                                 builder.AddContent(0, EditFormContent?.Invoke(update!));
-                                            }))
+                                            })
                                             .Close();
 
         DeleteOperationContent = rowValue =>
                             builder => builder.Component<TLink>()
-                                            .Attribute(nameof(TLink.Hover), LinkHover.Underline)
-                                            .Attribute(nameof(TLink.Theme), Theme.Danger)
-                                            .Attribute("onclick",HtmlHelper.Instance.Callback().Create(this,()=> ShowDialogAndCofirmToDelete(rowValue)))
-                                            .ChildContent(builder => builder.Component<TIcon>(DeleteActionIcon is not null).Attribute(nameof(TIcon.Name), DeleteActionIcon).Close().Content(DeleteActionName))
+                                            .Attribute(m => m.Hover, LinkHover.Underline)
+                                            .Attribute(m => m.Theme, Theme.Danger)
+                                            .Attribute(m=>m.ChildContent, builder => builder.Component<TIcon>(DeleteActionIcon is not null).Attribute(nameof(TIcon.Name), DeleteActionIcon).Close().Content(DeleteActionName))
+                                            .Attribute("onclick", HtmlHelper.Instance.Callback().Create(this, () => ShowDialogAndCofirmToDelete(rowValue)))
                                             .Close();
 
         ListFilterFormSubmitContent = builder => builder.Component<TButton>()
-                                                        .Attribute(nameof(TButton.Theme),Theme.Primary)
-                                                        .Attribute(nameof(TButton.HtmlType),ButtonHtmlType.Submit)
-                                                        .Attribute(nameof(TButton.Block),true)
-                                                        .ChildContent("查询")
+                                                        .Attribute(m => m.Theme,Theme.Primary)
+                                                        .Attribute(m => m.HtmlType,ButtonHtmlType.Submit)
+                                                        .Attribute(m => m.Block,true)
+                                                        .Content("查询")
                                                         .Close();
 
         ListFilterFormResetContent = builder => builder.Component<TButton>()
-                                                        .Attribute(nameof(TButton.Theme), Theme.Default)
-                                                        .Attribute(nameof(TButton.HtmlType), ButtonHtmlType.Reset)
-                                                        .Attribute(nameof(TButton.Block),true)
-                                                        .ChildContent("重置")
+                                                        .Attribute(m => m.Theme, Theme.Default)
+                                                        .Attribute(m => m.HtmlType, ButtonHtmlType.Reset)
+                                                        .Attribute(m => m.Block,true)
+                                                        .Content("重置")
                                                         .Close();
-    }
-
-    protected override void OnParametersSet()
-    {
-        InitialActionTools();
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if ( firstRender )
         {
+            InitialActionTools();
             await GetListData();
         }
     }
@@ -142,19 +143,20 @@ partial class CrudDialogTable<TCreate, TUpdate, TDetail, TList, TListFilter>
 
     void InitialActionTools()
     {
+        ActionTools ??= new();
         ActionTools.Add(BuildCreateActionButton());
 
         ActionToolsProvider?.Invoke(ActionTools);
-
+        StateHasChanged();
 
         RenderFragment? BuildCreateActionButton()
         => builder => builder.Component<FormDialogButton<TCreate>>(CreatePermissionProvider())
-                                .Attribute(nameof(FormDialogButton<TCreate>.DialogTitle), CreateDialogTitle)
+                                .Attribute(m => m.DialogTitle, CreateDialogTitle)
+                                .Attribute(m => m.ButtonContent, (RenderFragment)(content => content.Component<TIcon>().Attribute(m => m.Name, CreateActionIcon).Close()))
+                                .Attribute(m=>m.OnSubmit, OnFormCreating)
+                                .Attribute(m => m.OnDialogClosed, HtmlHelper.Instance.Callback().Create<Task<DialogResult>>(this, CloseCreateForm))
+                                .Attribute(m => m.ChildContent, model => builder => builder.AddContent(0, CreateFormContent, model))
                                 .Attribute("title", CreateActionName)
-                                .Attribute(nameof(FormDialogButton<TCreate>.ButtonContent), (RenderFragment)(content => content.Component<TIcon>().Attribute(nameof(TIcon.Name), CreateActionIcon).Close()))
-                                .Attribute(nameof(FormDialogButton<TCreate>.OnSubmit), OnFormCreating)
-                                .Attribute(nameof(FormDialogButton<TCreate>.OnDialogClosed), HtmlHelper.Instance.Callback().Create<Task<DialogResult>>(this, CloseCreateForm))
-                                .Attribute(nameof(FormDialogButton<TCreate>.ChildContent), (RenderFragment<TCreate>?)(model => builder => builder.AddContent(0, CreateFormContent, model)))
                             .Close();
     }
 }

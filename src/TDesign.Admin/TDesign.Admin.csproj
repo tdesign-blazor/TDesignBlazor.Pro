@@ -19,7 +19,7 @@
 	</ItemGroup>
 	
 	<ItemGroup>
-		<PackageReference Include="TDesign" Version="0.6" />
+		<PackageReference Include="TDesign" Version="0.6.1" />
 	</ItemGroup>
 	
 	<ItemGroup>

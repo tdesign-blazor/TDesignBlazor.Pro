@@ -47,15 +47,15 @@ public class FormDialogButton<TModel> : FormDialogComponentBase<TModel> where TM
     protected override void BuildRenderTree(RenderTreeBuilder builder)
     {
         builder.Component<TButton>()
-            .Attribute(nameof(TButton.Varient), Varient)
-            .Attribute(nameof(TButton.Theme), Theme)
-            .Attribute(nameof(TButton.Block), Block)
-            .Attribute(nameof(TButton.Shape), Shape)
-            .Attribute(nameof(TButton.Disabled), Disabled)
-            .Attribute(nameof(TButton.Size), ButtonSize)
-            .Attribute(nameof(TButton.AdditionalAttributes),AdditionalAttributes)
-            .Attribute(nameof(TButton.OnClick), HtmlHelper.Instance.Callback().Create<MouseEventArgs>(this, OpenDialog))
-            .ChildContent(ButtonContent)
+            .Attribute(m=>m.Varient, Varient)
+            .Attribute(m => m.Theme, Theme)
+            .Attribute(m => m.Block, Block)
+            .Attribute(m => m.Shape, Shape)
+            .Attribute(m=>m.Disabled, Disabled)
+            .Attribute(m=>m.Size, ButtonSize)
+            .Attribute(m => m.AdditionalAttributes,AdditionalAttributes)
+            .Attribute(m=>m.OnClick, HtmlHelper.Instance.Callback().Create<MouseEventArgs?>(this, OpenDialog))
+            .Content(ButtonContent)
             .Close();
     }
 }
