@@ -1,12 +1,11 @@
-﻿@page "/templates/table_dialog"
+﻿@page "/components/table_dialog"
 @using System.Linq.Expressions;
 
-<PageHeader Title="表格和对话框模板">
-    使用表格和对话框实现增删改查的页面功能
-</PageHeader>
-
-<TTab>
-    <TTabItem Title="运行">
+<PageExample Title="表格和对话框模板">
+    <Description>
+        使用表格和对话框实现增删改查的页面功能
+    </Description>
+    <Run>
         <CrudDialogTable TCreate="WeatherForecast"
                          TUpdate="WeatherForecast"
                          TList="WeatherForecast"
@@ -48,8 +47,8 @@
                 <TTableFieldColumn Header="备注" TItem="WeatherForecast" TField="string" Field="p=>p.Summary" />
             </TableColumnContent>
         </CrudDialogTable>
-    </TTabItem>
-    <TTabItem Title="代码">
+    </Run>
+    <Code>
         @Code.Create(@"
 ```html
 <CrudDialogTable TCreate=""WeatherForecast""
@@ -68,7 +67,6 @@
         <TFormItem For=""()=>context.TemperatureC"" Label=""城市"">
             <TInputText @bind-Value=""context.Summary"" />
         </TFormItem>
-
     </ListFilterFormContent>
     <CreateFormContent>
         <TFormItem For=""()=>context.Summary"" Label=""城市"">
@@ -180,10 +178,8 @@ public class WeatherForecast
 }
 ```
 ")
-    </TTabItem>
-</TTab>
-
-@inject HttpClient Client
+    </Code>
+</PageExample>
 
 @code {
     async Task<DataSource<WeatherForecast>> GetData(WeatherForecast filter)

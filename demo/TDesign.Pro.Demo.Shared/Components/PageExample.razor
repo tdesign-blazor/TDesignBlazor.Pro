@@ -1,0 +1,63 @@
+﻿<PageHeader Title="@Title">
+    @Description
+</PageHeader>
+
+<TTab>
+    @if ( Run is not null )
+    {
+        <TTabItem Title="运行效果">
+            @Run
+        </TTabItem>
+    }
+    <TTabItem Title="示例代码" style="overflow-y:auto;max-height:700px">
+        @Code
+    </TTabItem>
+    <TTabItem Title="API">
+        @if ( ComponentType is not null )
+        {
+            <table class="t-table">
+                <thead>
+                    <tr>
+                        <th>参数</th>
+                        <th>说明</th>
+                        <th>数据类型</th>
+                        <th>是否必填</th>
+                        <th>默认值</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        var list = ApiDoc.GetParameterApiDoc(ComponentType);
+                        foreach ( var item in list )
+                        {
+                            <tr>
+                                <td>@item.name</td>
+                                <td>@item.comment</td>
+                                <td>
+                                <code>@item.type</code>
+                                </td>
+                                <td>
+                                    @if ( item.requried )
+                                    {
+                                        <TTag Theme="Theme.Danger">Y</TTag>
+                                    }
+                                </td>
+                                <td>
+                                    @item.defaultValue
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        }
+    </TTabItem>
+</TTab>
+
+@code {
+    [Parameter] public string? Title { get; set; }
+    [Parameter] public RenderFragment? Description { get; set; }
+    [Parameter] public RenderFragment? Run { get; set; }
+    [Parameter] public RenderFragment? Code { get; set; }
+    [Parameter] public Type? ComponentType { get; set; }
+}

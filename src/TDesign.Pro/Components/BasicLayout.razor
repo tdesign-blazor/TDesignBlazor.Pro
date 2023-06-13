@@ -1,0 +1,36 @@
+﻿
+<PageTitle>@Options.AppName</PageTitle>
+
+<TLayout>
+    <HeaderContent>
+        <TMenu Dark="Options.Dark">
+            <LogoContent>
+                @LogoContent
+            </LogoContent>
+            <ChildContent>
+                @if (TopMenuItemsProvider is not null)
+                {
+                    var topMeneItems = TopMenuItemsProvider().Result;
+                    @GetMenuItem(topMeneItems)
+                }
+            </ChildContent>
+        </TMenu>
+    </HeaderContent>
+    <LeftSideContent>
+        <TMenu Aside Dark="Options.Dark" style="height:100vh">
+            @if ( SideMenuItemsProvider is not null )
+            {
+                var sideMeneItems = SideMenuItemsProvider().Result;
+                @GetMenuItem(sideMeneItems)
+            }
+        </TMenu>
+    </LeftSideContent>
+    <ChildContent>
+        <div style="margin:10px">
+            @ChildContent
+        </div>
+    </ChildContent>
+    <FooterContent>
+        @FooterContent
+    </FooterContent>
+</TLayout>

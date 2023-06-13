@@ -1,5 +1,47 @@
 ﻿@page "/"
 
-<PageTitle>新手上路</PageTitle>
+<PageHeader Title="快速上手">
+    只需要几行代码就可以开始
+</PageHeader>
 
-首页
+@Code.Create(@"
+## 安装包
+```cs
+> Install-Package TDesign.Pro
+```
+## 引入 TDesignBlazor 的官方样式
+```html
+<link rel=""stylesheet"" href=""_content/TDesign/tdesign-blazor.css"" />
+```
+
+## 添加服务
+```cs
+builder.Services.AddTDesignPro();
+
+//or
+
+builder.Services.AddTDesignPro(configure => {
+    configure.AppName = ""系统名称"";
+    //..其他配置项
+});
+```
+
+## 修改 App.razor
+```html
+<Router AppAssembly=""@typeof(App).Assembly"">
+    <Found Context=""routeData"">
+        <RouteView RouteData=""@routeData"" DefaultLayout=""@typeof(MainLayout)"" />
+        <FocusOnNavigate RouteData=""@routeData"" Selector=""h1"" />
+    </Found>
+    <NotFound>
+        <PageTitle>Not found</PageTitle>
+        <LayoutView Layout=""@typeof(MainLayout)"">
+            <p role=""alert"">Sorry, there's nothing at this address.</p>
+        </LayoutView>
+    </NotFound>
+</Router>
+
+<!--加入 TDesignBlazor 组件-->
+<TDesignContainer/>
+```
+")

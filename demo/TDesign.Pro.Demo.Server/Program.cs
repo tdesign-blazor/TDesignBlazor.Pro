@@ -1,10 +1,12 @@
+using TDesign.Pro.Demo.Shared;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<HttpClient>(sp => new() { BaseAddress = new Uri("http://localhost:5184") });
-builder.Services.AddTDesign();
+builder.Services.AddTDesignDemo();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

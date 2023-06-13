@@ -1,0 +1,49 @@
+﻿@page "/components/basiclayout"
+
+<PageExample Title="BasicLayout 基本布局" ComponentType="typeof(BasicLayout)">
+    <Description>
+    根据配置简化布局的应用，展现上左右的传统布局。
+    <p>
+            在你的 <code>MainLayout.razor</code> 组件中或继承了 <code>LayoutComponentBase</code> 的布局组件内使用。
+    </p>
+    </Description>
+    <Code>
+        @Code.Create(@"
+```html
+<BasicLayout SideMenuItemsProvider=""GetSideMenuItems"">
+    @Body
+</BasicLayout>
+```
+```cs
+    Task<IEnumerable<MenuItem>> GetSideMenuItems()
+    {
+        var menus= new List<MenuItem>
+        {
+             new()
+             { 
+                 Name=""分组1"", 
+                 IsGroup=true,
+                 Children=new List<MenuItem>
+                 {
+                     new(){ Name=""菜单1"", Link=""/""},
+                     new(){ Name=""菜单2"", Link=""/..""}
+                 }
+             },
+             new()
+             { 
+                 Name=""分组2"",
+                 IsGroup=true,
+                 Children=new List<MenuItem>
+                 {
+                    new(){ Name=""菜单1"", Link=""...""},
+                    new(){ Name=""菜单2"", Link=""...""},
+                    new(){ Name=""菜单3"", Link=""...""}
+                 }
+             }
+        };
+        return Task.FromResult(menus.AsEnumerable());
+    }
+```
+")
+    </Code>
+</PageExample>
