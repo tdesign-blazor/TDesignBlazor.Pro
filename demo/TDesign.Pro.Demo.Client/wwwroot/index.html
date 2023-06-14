@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>TDesign.Pro</title>
+    <title>TDesign.Pro - 基于 TDesignBlazor 组件库的专业解决方案组件库</title>
     <base href="/" />
     <link rel="stylesheet" href="_content/TDesign/tdesign-blazor.css" />
     <link rel="stylesheet" href="_content/TDesign.Pro.Demo.Shared/app.css" />
@@ -15,11 +15,20 @@
 
 <body>
     <div id="app">
-        <svg class="loading-progress">
-            <circle r="40%" cx="50%" cy="50%" />
-            <circle r="40%" cx="50%" cy="50%" />
-        </svg>
-        <div class="loading-progress-text"></div>
+        <div>
+            <img src="tdesign-blazor-banner.png" style="display:flex;transform:scale(0.5);width:100%;" />
+            <div style="display:flex;justify-content:center">
+                <svg fill="none" viewBox="0 0 16 16" width="1em" height="1em" class="t-icon t-icon-loading" style="font-size:2rem;display:inline-block;">
+                    <path fill="currentColor" d="M8 1.5a6.5 6.5 0 000 13v-1.63A4.87 4.87 0 1112.88 8h1.62A6.5 6.5 0 008 1.5z" fill-opacity="0.9"></path>
+                </svg>
+                <span style="font-size:1.8rem;display:inline-block;margin-left:8px">
+                    Loading...
+                </span>
+            </div>
+            <div style="margin-top: 150px; display: flex; justify-content: center;color:#666">
+                <a href="https://beian.miit.gov.cn/" target="_blank" style="text-decoration:none">京ICP备2023000917号-1</a>
+            </div>
+        </div>
     </div>
 
     <div id="blazor-error-ui">
