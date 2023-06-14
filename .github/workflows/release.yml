@@ -1,0 +1,31 @@
+name: Pack nuget by tag
+
+on:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  pack-push-nuget-package:
+    runs-on: ubuntu-latest
+    if: github.repository_owner == 'tdesign-blazor'
+    steps:
+      - name: 迁出代码
+        uses: actions/checkout@v2
+
+      - name: Setup .NET Environment
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: |
+            6.0.x
+            7.0.x
+
+      - name: 发布 nuget 包
+        run: |
+          VERSION=`git describe --tags`
+          echo "Publishing Version: ${VERSION}"
+          dotnet build -c release
+          dotnet pack ./src/TDesign.Pro/TDesign.Pro.csproj -c release -o ./pack -p:PackageVersion=$Version
+          dotnet nuget push './pack/*.nupkg' -s https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET_API_KEY }} --skip-duplicate
+
+    
