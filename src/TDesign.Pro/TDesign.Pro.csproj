@@ -1,15 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
 	<Import Project="../../common.props" />
 	<PropertyGroup>
+		<Title>TDesign.Pro</Title>
+		<PackageId>TDesign.Pro</PackageId>
 		<RootNamespace>TDesign.Pro</RootNamespace>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<Description>
-			基于 TDesignBlazor 的专业组件库，进一步提供比较复杂且适应应用开发的完整组件封装。
-		</Description>		
+		<Description>基于 TDesignBlazor 的专业组件库，进一步提供比较复杂且适应应用开发的完整组件封装。</Description>		
 		<PackageId>TDesign.Pro</PackageId>
 		<VersionPrefix>0.1</VersionPrefix>
-		<VersionSuffix>alpha</VersionSuffix>
+		<VersionSuffix>beta</VersionSuffix>
+		<PackageIcon>tdesign-blazor-logo.png</PackageIcon>
+		<PackageProjectUrl>https://github.com/tdesign-blazor/TDesignBlazor.Pro</PackageProjectUrl>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<RepositoryUrl>https://github.com/tdesign-blazor/TDesignBlazor.Pro</RepositoryUrl>
+		<PackageTags>TDesign Blazor Component</PackageTags>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
 	</PropertyGroup>
 
 	
@@ -23,5 +29,20 @@
 	
 	<ItemGroup>
 	  <Folder Include="Annotations\" />
+	</ItemGroup>
+	
+	<ItemGroup>
+	  <None Include="..\..\asset\tdesign-blazor-logo.png">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	  <None Include="..\..\LICENSE">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	  <None Include="..\..\README.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
 	</ItemGroup>
 </Project>
