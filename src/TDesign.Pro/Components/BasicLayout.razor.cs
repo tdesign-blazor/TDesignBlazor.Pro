@@ -18,6 +18,11 @@ public partial class BasicLayout
     [ParameterApiDoc("顶部导航菜单的委托", Type = "Func<Task<IEnumerable<MenuItem>>>")]
     [Parameter] public Func<Task<IEnumerable<MenuItem>>>? TopMenuItemsProvider { get; set; } = () => Task.FromResult(Enumerable.Empty<MenuItem>());
     /// <summary>
+    /// 顶部导航菜单操作部分的任意内容。
+    /// </summary>
+    [ParameterApiDoc("顶部导航菜单操作部分的任意内容")]
+    [Parameter] public RenderFragment? TopMenuOperationContent { get; set; }
+    /// <summary>
     /// 设置边栏导航菜单的委托。
     /// </summary>
     [ParameterApiDoc("边栏导航菜单的委托",Type = "Func<Task<IEnumerable<MenuItem>>>")]
@@ -36,12 +41,11 @@ public partial class BasicLayout
     /// 显示内容页的部分，一般使用 <see cref="LayoutComponentBase.Body"/> 参数。
     /// </summary>
     [ParameterApiDoc("显示内容页的部分，一般使用 @Body 参数")]
-    [Parameter]public RenderFragment? ChildContent { get; set; }
-
+    [Parameter]public RenderFragment? BodyContent { get; set; }
     protected override void OnInitialized()
     {
         LogoContent ??= builder => builder.Element("img",condition: Options.LogoUrl.IsNotNullOrEmpty()).Attribute("src",Options.LogoUrl)
-                                            .Element("h2").Content(Options.AppName).Close()
+                                            .Element("h2").Style("margin-left:10px").Content(Options.AppName).Close()
                                             ;
     }
 
@@ -63,6 +67,7 @@ public partial class BasicLayout
                     builder.Component<TMenuItem>()
                             .Attribute(m => m.Link, item.Link)
                             .Attribute(m => m.IconPrefix, item.Icon)
+                            .Attribute(m=>m.AdditionalAttributes,item.Attributes)
                             .Content(builder =>
                             {
                                 if ( item.Children.Any() )
@@ -102,7 +107,10 @@ public class MenuItem
     /// 获取或设置一个布尔值，表示是否作为分组菜单。
     /// </summary>
     public bool IsGroup { get; set; }
-
+    /// <summary>
+    /// 菜单的其他特性。
+    /// </summary>
+    public IDictionary<string, object> Attributes { get; set; } = new Dictionary<string, object>();
     /// <summary>
     /// 获取或设置子菜单。
     /// </summary>

@@ -1,15 +1,40 @@
-﻿@page "/components/table_dialog"
+﻿@page "/components/dialogtable"
 @using System.Linq.Expressions;
 
-<PageExample Title="表格和对话框模板">
+<PageExample Title="对话框表格(CrudDialogTable)" ComponentType="typeof(CrudDialogTable<,,,,>)">
     <Description>
-        使用表格和对话框实现增删改查的页面功能
+        使用表格和对话框实现增删改查的页面功能。
+        <TAlert>
+            <p>组件具备 CRUD 功能，只需要简单的配置即可完成一个具备对话框操作的 CRUD 表格。</p>
+            <p>
+            <TSpace>
+                    <TSpaceItem>
+                        TCreate: 创建使用的表单对象
+                    </TSpaceItem>
+                    <TSpaceItem>
+                        TUpdate: 更新使用的表单对象
+                    </TSpaceItem>
+                    <TSpaceItem>
+                        TDetail: 详情使用的表单对象
+                    </TSpaceItem>
+                    <TSpaceItem>
+                        TDelete: 删除使用的表单对象
+                    </TSpaceItem>
+                    <TSpaceItem>
+                        TList: 列表使用的表单对象
+                    </TSpaceItem>
+                    <TSpaceItem>
+                        TSearch: 查询使用的表单对象
+                    </TSpaceItem>
+            </TSpace>
+            </p>
+        </TAlert>
     </Description>
     <Run>
         <CrudDialogTable TCreate="WeatherForecast"
                          TUpdate="WeatherForecast"
                          TList="WeatherForecast"
-                         TListFilter="WeatherForecast"
+                         TSearch="WeatherForecast"
                          TDetail="WeatherForecast"
                          PageTitle="天气"
                          ListDataSourceProvider="GetData"
@@ -18,11 +43,11 @@
                          OnFormUpdating="Update"
                          OnConfirmDeleting="Delete"
                          Key="m=>m.Id">
-            <ListFilterFormContent>
+            <SearchFormContent>
                 <TFormItem For="()=>context.TemperatureC" Label="城市">
                     <TInputText @bind-Value="context.Summary" />
                 </TFormItem>
-            </ListFilterFormContent>
+            </SearchFormContent>
             <CreateFormContent>
                 <TFormItem For="()=>context.Summary" Label="城市">
                     <TInputText @bind-Value="context.Summary" />
@@ -31,14 +56,14 @@
                     <TInputText @bind-Value="context.TemperatureC" />
                 </TFormItem>
             </CreateFormContent>
-            <EditFormContent>
+            <UpdateFormContent>
                 <TFormItem For="()=>context.Summary" Label="城市">
                     <TInputText @bind-Value="context.Summary" />
                 </TFormItem>
                 <TFormItem For="()=>context.TemperatureC" Label="摄氏度">
                     <TInputText @bind-Value="context.TemperatureC" />
                 </TFormItem>
-            </EditFormContent>
+            </UpdateFormContent>
             <TableColumnContent>
                 <TTableFieldColumn Header="Id" TItem="WeatherForecast" TField="int" Field="p=>p.Id" />
                 <TTableFieldColumn Header="日期" TItem="WeatherForecast" TField="DateOnly" Field="p=>p.Date" Format="yyyy-MM-dd" />
@@ -54,7 +79,7 @@
 <CrudDialogTable TCreate=""WeatherForecast""
                     TUpdate=""WeatherForecast""
                     TList=""WeatherForecast""
-                    TListFilter=""WeatherForecast""
+                    TSearch=""WeatherForecast""
                     TDetail=""WeatherForecast""
                     PageTitle=""天气""
                     ListDataSourceProvider=""GetData""

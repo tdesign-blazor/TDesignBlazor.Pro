@@ -1,10 +1,34 @@
 ﻿@inherits LayoutComponentBase
 
-<BasicLayout SideMenuItemsProvider="GetSideMenuItems">
-    @Body
+<BasicLayout SideMenuItemsProvider="GetSideMenuItems" TopMenuItemsProvider="GetTopMenuItems">
+    <BodyContent>
+        @Body
+    </BodyContent>
 </BasicLayout>
 
 @code{
+    Task<IEnumerable<MenuItem>> GetTopMenuItems()
+    {
+        var menus = new List<MenuItem>
+        {
+             new()
+             {
+                 Name="Github 源代码",
+                 Link="https://github.com/tdesign-blazor/TDesignBlazor.Pro",
+                 Attributes=new Dictionary<string, object>()
+                 {
+                     ["target"]="_blank"
+                 }
+             },
+             new()
+             {
+                 Name="TDesignBlazor 组件库",
+                 Link="https://github.com/tdesign-blazor/TDesignBlazor"
+             },
+        };
+        return Task.FromResult(menus.AsEnumerable());
+    }
+
     Task<IEnumerable<MenuItem>> GetSideMenuItems()
     {
         var menus= new List<MenuItem>
@@ -25,7 +49,7 @@
                  Children=new List<MenuItem>
                  {
                     new(){ Name="基础布局（BasicLayout)", Link="/components/basiclayout"},
-                    new(){ Name="对话框表格", Link="/components/table_dialog"}
+                    new(){ Name="对话框表格(CrudDialogTable)", Link="/components/dialogtable"}
                  }
              }
         };

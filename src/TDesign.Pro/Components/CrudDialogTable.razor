@@ -2,7 +2,7 @@
 @typeparam TUpdate
 @typeparam TDetail
 @typeparam TList
-@typeparam TListFilter
+@typeparam TSearch
 
 @inherits TDesignPageBase
 
@@ -12,13 +12,13 @@
 
 <TRow style="margin-bottom:10px">
     <TColumn Span="ColumnSpan.Is12">
-        <TForm Model="FilterModel" Inline OnValidSubmit="GetListData">
+        <TForm Model="SearchModel" Inline OnValidSubmit="GetListData">
             <DataAnnotationsValidator/>
-            @ListFilterFormContent?.Invoke(FilterModel)
+            @SearchFormContent?.Invoke(SearchModel)
             <TFormItem>
                 <TSpace>
-                    <TSpaceItem>@ListFilterFormSubmitContent</TSpaceItem>
-                    <TSpaceItem>@ListFilterFormResetContent</TSpaceItem>
+                    <TSpaceItem>@SearchFormSubmitContent</TSpaceItem>
+                    <TSpaceItem>@SearchFormResetContent</TSpaceItem>
                 </TSpace>
             </TFormItem>
         </TForm>
@@ -41,13 +41,13 @@
 
     <TTableFieldColumn Header="操作" TItem="TList" TField="object" Field="m=>Key">
         <TSpace>
-            @if ( EditPermissionProvider() )
+            @if ( UpdatePermissionProvider().Result )
             {
                 <TSpaceItem>
-                    @EditOperationContent?.Invoke(context)
+                    @UpdateOperationContent?.Invoke(context)
                 </TSpaceItem>
             }
-            @if ( DeletePermissionProvider() )
+            @if ( DeletePermissionProvider().Result )
             {
                 <TSpaceItem>
                     @DeleteOperationContent?.Invoke(context)

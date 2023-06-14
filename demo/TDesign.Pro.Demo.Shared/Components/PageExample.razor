@@ -9,20 +9,20 @@
             @Run
         </TTabItem>
     }
-    <TTabItem Title="示例代码" style="overflow-y:auto;max-height:700px">
+    <TTabItem Title="示例代码" style="overflow-y:auto;max-height:800px">
         @Code
     </TTabItem>
-    <TTabItem Title="API">
+    <TTabItem Title="API" style="overflow-y:auto;max-height:800px">
         @if ( ComponentType is not null )
         {
             <table class="t-table">
                 <thead>
                     <tr>
-                        <th>参数</th>
-                        <th>说明</th>
-                        <th>数据类型</th>
-                        <th>是否必填</th>
-                        <th>默认值</th>
+                        <th width="150px">参数</th>
+                        <th width="40%">说明</th>
+                        <th width="30%">数据类型</th>
+                        <th width="60px">必填</th>
+                        <th width="150px">默认值</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -39,7 +39,7 @@
                                 <td>
                                     @if ( item.requried )
                                     {
-                                        <TTag Theme="Theme.Danger">Y</TTag>
+                                        <TTag Theme="Theme.Danger">必填</TTag>
                                     }
                                 </td>
                                 <td>

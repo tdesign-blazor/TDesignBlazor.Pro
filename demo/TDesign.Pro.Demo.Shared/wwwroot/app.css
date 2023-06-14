@@ -6,11 +6,11 @@ pre{
     padding:10px;
 }
 code{
-    color:red;
+    color:darkslateblue;
     display:inline-block;
     padding-left:6px;
     padding-right:6px;
-    background:#dedede;
+    background:#fff;
 }
 
 .valid.modified:not([type=checkbox]) {
