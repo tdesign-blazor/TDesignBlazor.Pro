@@ -8,8 +8,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Description>基于 TDesignBlazor 的专业组件库，进一步提供比较复杂且适应应用开发的完整组件封装。</Description>		
 		<PackageId>TDesign.Pro</PackageId>
-		<VersionPrefix>0.1</VersionPrefix>
-		<VersionSuffix>beta</VersionSuffix>
+		<Version>0.1</Version>
 		<PackageIcon>tdesign-blazor-logo.png</PackageIcon>
 		<PackageProjectUrl>https://github.com/tdesign-blazor/TDesignBlazor.Pro</PackageProjectUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
