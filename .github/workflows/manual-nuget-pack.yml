@@ -1,9 +1,12 @@
-name: Pack nuget by tag
+name: Manual pack to nuget
 
 on:
-  push:
-    tags:
-      - "*"
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Package Version"
+        required: true 
+        type: string
 
 jobs:
   pack-push-nuget-package:
@@ -19,13 +22,10 @@ jobs:
           dotnet-version: |
             6.0.x
             7.0.x
-
       - name: 发布 nuget 包
         run: |
-          VERSION=`git describe --tags`
-          echo "Publishing Version: ${VERSION}"
-          dotnet build -c release
-          dotnet pack ./src/TDesign.Pro/TDesign.Pro.csproj -c release -o ./pack -p:PackageVersion=${VERSION}
+          dotnet build ./src/TDesign.Pro/TDesign.Pro.csproj -c release
+          dotnet pack ./src/TDesign.Pro/TDesign.Pro.csproj -c release -o ./pack -p:PackageVersion=${{ github.event.inputs.version }}
           dotnet nuget push './pack/*.nupkg' -s https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET_API_KEY }} --skip-duplicate
 
     
