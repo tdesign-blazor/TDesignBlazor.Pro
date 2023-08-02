@@ -151,7 +151,7 @@ partial class CrudDialogTable<TCreate, TUpdate, TDetail, TList, TSearch>
         => builder => builder.Component<FormDialogButton<TCreate>>(CreatePermissionProvider().Result)
                                 .Attribute(m => m.DialogTitle, CreateDialogTitle)
                                 .Attribute(m => m.ButtonContent, content => content.Component<TIcon>().Attribute(m => m.Name, CreateActionIcon).Close())
-                                .Attribute(m=>m.OnSubmit, OnFormCreating)
+                                .Attribute(m => m.OnSubmit, OnFormCreating)
                                 .Attribute(m => m.OnDialogClosed, HtmlHelper.Instance.Callback().Create<Task<DialogResult>>(this, CloseCreateForm))
                                 .Attribute(m => m.ChildContent, model => builder => builder.AddContent(0, CreateFormContent, model))
                                 .Attribute("title", CreateActionName)
